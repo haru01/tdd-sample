@@ -8,7 +8,7 @@ public class MockitoTest {
 	public void モックテスト例() throws Exception {
 		ExternalComponent mock = mock(ExternalComponent.class);
 		Target target = new Target(mock);
-//		target.run("message");
+		target.run("message");
 		verify(mock).send("MESSAGE"); 
 	}
 }
