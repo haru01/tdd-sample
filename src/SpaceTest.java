@@ -44,7 +44,7 @@ public class SpaceTest {
 	}
 
 	@Test
-	public void 生存_死んでいるセルに隣接する生きたセルが２つか3つあれば次の世代が誕生する() {
+	public void 生存_生きているセルに隣接する生きたセルが２つか3つあれば次の世代が誕生する() {
 		assertThat(new Space(survival2Case()).nextTime().cell(1,1).isAlive(), 
 				is(true));
 		assertThat(new Space(survival3Case()).nextTime().cell(1,1).isAlive(), 
@@ -53,7 +53,7 @@ public class SpaceTest {
 	}
 
 	@Test
-	public void 過疎_死んでいるセルに隣接する生きたセルが1つ以下ならば過疎により死滅する() {
+	public void 過疎_生きているセルに隣接する生きたセルが1つ以下ならば過疎により死滅する() {
 		assertThat(new Space(dead1Case()).nextTime().cell(1,1).isDead(), 
 				is(true));
 	}
