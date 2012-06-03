@@ -31,31 +31,48 @@ public class SpaceTest {
 								{0,0,0}};
 	}
 
-	private Integer[][] dead1Case() {
+	private Integer[][] underDeadCase() {
 		return new Integer[][] {{0,1,0},
 								{0,1,0},
 								{0,0,0}};
 	}
 
+	private Integer[][] upperDeadCase() {
+		return new Integer[][] {{1,1,1},
+								{1,1,0},
+								{0,0,0}};
+	}
+
 	@Test
 	public void ’a¶_€‚ñ‚Å‚¢‚éƒZƒ‹‚É—×Ú‚·‚é¶‚«‚½ƒZƒ‹‚ª‚¿‚å‚¤‚Ç3‚Â‚ ‚ê‚ÎŸ‚Ì¢‘ã‚ª’a¶‚·‚é() {
-		assertThat(new Space(aliveCase()).nextTime().cell(1,1).isAlive(), 
-				is(true));
+		assertThat(new Space(aliveCase()).nextTime().cell(1,1)
+				.isAlive(), 
+				 is(true));
 	}
 
 	@Test
 	public void ¶‘¶_¶‚«‚Ä‚¢‚éƒZƒ‹‚É—×Ú‚·‚é¶‚«‚½ƒZƒ‹‚ª‚Q‚Â‚©3‚Â‚ ‚ê‚ÎŸ‚Ì¢‘ã‚ª’a¶‚·‚é() {
-		assertThat(new Space(survival2Case()).nextTime().cell(1,1).isAlive(), 
-				is(true));
-		assertThat(new Space(survival3Case()).nextTime().cell(1,1).isAlive(), 
-				is(true));
+		assertThat(new Space(survival2Case()).nextTime().cell(1,1)
+				.isAlive(), 
+				 is(true));
+		assertThat(new Space(survival3Case()).nextTime().cell(1,1)
+				.isAlive(), 
+				 is(true));
 
 	}
 
 	@Test
 	public void ‰ß‘a_¶‚«‚Ä‚¢‚éƒZƒ‹‚É—×Ú‚·‚é¶‚«‚½ƒZƒ‹‚ª1‚ÂˆÈ‰º‚È‚ç‚Î‰ß‘a‚É‚æ‚è€–Å‚·‚é() {
-		assertThat(new Space(dead1Case()).nextTime().cell(1,1).isDead(), 
-				is(true));
+		assertThat(new Space(underDeadCase()).nextTime().cell(1,1)
+				.isDead(), 
+				 is(true));
+	}
+
+	@Test
+	public void ‰ß–§_¶‚«‚Ä‚¢‚éƒZƒ‹‚É—×Ú‚·‚é¶‚«‚½ƒZƒ‹‚ª4‚ÂˆÈã‚È‚ç‚Î‰ß–§‚É‚æ‚è€–Å‚·‚é() {
+		assertThat(new Space(upperDeadCase()).nextTime().cell(1,1)
+				.isDead(), 
+				 is(true));
 	}
 
 	
