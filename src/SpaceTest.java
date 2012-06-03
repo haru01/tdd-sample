@@ -4,9 +4,7 @@ import static org.junit.Assert.*;
 import static org.junit.matchers.JUnitMatchers.hasItems;
 
 import java.util.List;
-
 import org.junit.Test;
-
 
 public class SpaceTest {
 	public static int ALIVE = 1;
@@ -21,17 +19,41 @@ public class SpaceTest {
 								{0,0,0}};
 	}
 
+	private Integer[][] survival2Case() {
+		return new Integer[][] {{1,1,0},
+								{0,1,0},
+								{0,0,0}};
+	}
+
+	private Integer[][] survival3Case() {
+		return new Integer[][] {{1,1,1},
+								{0,1,0},
+								{0,0,0}};
+	}
+
 	@Test
 	public void 誕生_死んでいるセルに隣接する生きたセルがちょうど3つあれば次の世代が誕生する() {
 		assertThat(new Space(aliveCase()).nextTime().cell(1,1).isAlive(), 
 				is(true));
 	}
-	
+
+	@Test
+	public void 生存_死んでいるセルに隣接する生きたセルが２つか3つあれば次の世代が誕生する() {
+		assertThat(new Space(survival2Case()).nextTime().cell(1,1).isAlive(), 
+				is(true));
+		assertThat(new Space(survival3Case()).nextTime().cell(1,1).isAlive(), 
+				is(true));
+
+	}
+
+
+
 	// Cell#countAroundAlive()
 	@Test
 	public void 周りの生きているセルの数をカウントできること() throws Exception {
 		assertThat(new Space(aliveCase()).cell(1, 1).countAroundAlive(), is(3));
 	}
+
 	// Cell#aroundCells()
 	
 	@Test

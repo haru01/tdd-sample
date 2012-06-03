@@ -35,6 +35,7 @@ public class Space {
 	
 	public class Cell {
 		private static final int ALIVE = 1;
+		private static final int DEAD = 0;
 		public final int status;
 		public final int row;
 		public final int column;
@@ -53,14 +54,17 @@ public class Space {
 		}
 		
 		private Cell nextTime() {
-			if (countAroundAlive() == 3) {
+			int aroundAlive = countAroundAlive();
+			if (this.isDead() && aroundAlive == 3) {
+				return new Cell(ALIVE, this.row, this.column);
+			} else if (this.isAlive() && (aroundAlive == 3 || aroundAlive == 2)) {
 				return new Cell(ALIVE, this.row, this.column);
 			}
 			// TODO;
-			return this;
+			return new Cell(DEAD, this.row, this.column);
 		}
 
-		public int countAroundAlive() {
+		int countAroundAlive() {
 			int counter = 0;
 			for (Cell cell : aroundCells()) {
 				if (cell.isAlive()) {
@@ -70,14 +74,14 @@ public class Space {
 			return counter;
 		}
 
-		public List<Cell> aroundCells() {
+		List<Cell> aroundCells() {
 			List<Cell> results = new ArrayList<Cell>();
 			for (int rowIndex = row - 1; rowIndex <= row + 1; rowIndex++) {
 				for (int columnIndex = column - 1; columnIndex <= column + 1; columnIndex++) {
 					if(rowIndex == row && columnIndex == column) {
 						continue;
 					}
-					if (inSapce(rowIndex, columnIndex)) { 
+					if (isInSapce(rowIndex, columnIndex)) { 
 						results.add(cells[rowIndex][columnIndex]);
 					}
 				}
@@ -85,7 +89,7 @@ public class Space {
 			return results;
 		}
 		
-		private boolean inSapce(int row, int column) {
+		private boolean isInSapce(int row, int column) {
 			return 0 <= row && 0 <= column &&
 				  row <= cells.length - 1 && column <= cells[row].length - 1;
 		}
