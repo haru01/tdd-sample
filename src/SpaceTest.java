@@ -31,6 +31,12 @@ public class SpaceTest {
 								{0,0,0}};
 	}
 
+	private Integer[][] dead1Case() {
+		return new Integer[][] {{0,1,0},
+								{0,1,0},
+								{0,0,0}};
+	}
+
 	@Test
 	public void 誕生_死んでいるセルに隣接する生きたセルがちょうど3つあれば次の世代が誕生する() {
 		assertThat(new Space(aliveCase()).nextTime().cell(1,1).isAlive(), 
@@ -46,8 +52,13 @@ public class SpaceTest {
 
 	}
 
+	@Test
+	public void 過疎_死んでいるセルに隣接する生きたセルが1つ以下ならば過疎により死滅する() {
+		assertThat(new Space(dead1Case()).nextTime().cell(1,1).isDead(), 
+				is(true));
+	}
 
-
+	
 	// Cell#countAroundAlive()
 	@Test
 	public void 周りの生きているセルの数をカウントできること() throws Exception {
