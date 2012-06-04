@@ -6,8 +6,6 @@ import static org.junit.matchers.JUnitMatchers.hasItems;
 import java.util.List;
 import org.junit.Test;
 
-
-
 public class SpaceTest {
 	private Integer[][] sampleCalse() {
 		return aliveCase();
@@ -15,7 +13,7 @@ public class SpaceTest {
 	
 	private Integer[][] aliveCase() {
 		return new Integer[][] {{1,1,0},
-				                {1,0,0},
+								{1,0,0},
 								{0,0,0}};
 	}
 
@@ -51,7 +49,7 @@ public class SpaceTest {
 	}
 
 	@Test
-	public void 生存_生きているセルに隣接する生きたセルが２つか3つあれば次の世代が誕生する() {
+	public void 生存_生きているセルに隣接する生きたセルが2つか3つならば次の世代でも生存する() {
 		assertThat(new Space(survival2Case()).nextTime().cell(1,1)
 				.isAlive(), 
 				 is(true));
