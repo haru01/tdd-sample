@@ -6,7 +6,7 @@ import static org.junit.matchers.JUnitMatchers.*;
 
 public class BowlingGameTest {
 
-//  #score
+//  score
 	@Test
 	public void サンプルのスコア計算できること() {
 		BowlingGame game = new BowlingGame(new Integer[] {5, 4, 0, 0, 10, 0, 9, 1, 6, 3, 7, 0, 6, 2, 10, 0, 10, 0, 1, 9, 5});
@@ -99,7 +99,7 @@ public class BowlingGameTest {
 		// act assert
 		assertThat(game.isSpare(0), is(true));
 	}
-	
+
 	@Test
 	public void 通常の場合はfalseを返す() {
 		// arrange
@@ -107,5 +107,4 @@ public class BowlingGameTest {
 		// act assert
 		assertThat(game.isSpare(0), is(false));
 	}
-
 }
