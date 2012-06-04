@@ -6,9 +6,9 @@ import static org.junit.matchers.JUnitMatchers.hasItems;
 import java.util.List;
 import org.junit.Test;
 
-public class SpaceTest {
-	public static int ALIVE = 1;
 
+
+public class SpaceTest {
 	private Integer[][] sampleCalse() {
 		return aliveCase();
 	}
@@ -83,7 +83,6 @@ public class SpaceTest {
 	}
 
 	// Cell#aroundCells()
-	
 	@Test
 	public void ’†‰›‚Ìê‡‚Ìü‚è‚ÌƒZƒ‹‚ªæ“¾‚Å‚«‚é‚±‚Æ() throws Exception {
 		Space space = new Space(aliveCase());

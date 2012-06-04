@@ -4,6 +4,7 @@ import java.util.List;
 public class Space {
 	
 	private Cell[][] cells;
+
 	public Space(Cell[][] cells) {
 		this.cells = cells;
 	}
@@ -32,7 +33,7 @@ public class Space {
 	public Space.Cell cell(int row, int column) {
 		return cells[row][column];
 	}
-	
+
 	public class Cell {
 		private static final int ALIVE = 1;
 		private static final int DEAD = 0;
@@ -52,7 +53,7 @@ public class Space {
 		public Boolean isDead() {
 			return this.status == 0;
 		}
-		
+
 		private Cell nextTime() {
 			int aroundAlive = countAroundAlive();
 			if (this.isDead() && aroundAlive == 3) {
@@ -60,7 +61,6 @@ public class Space {
 			} else if (this.isAlive() && (aroundAlive == 3 || aroundAlive == 2)) {
 				return new Cell(ALIVE, this.row, this.column);
 			}
-			// TODO;
 			return new Cell(DEAD, this.row, this.column);
 		}
 
@@ -88,7 +88,7 @@ public class Space {
 			}
 			return results;
 		}
-		
+
 		private boolean isInSapce(int row, int column) {
 			return 0 <= row && 0 <= column &&
 				  row <= cells.length - 1 && column <= cells[row].length - 1;
