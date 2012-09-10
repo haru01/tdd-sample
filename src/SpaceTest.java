@@ -42,14 +42,14 @@ public class SpaceTest {
 	}
 
 	@Test
-	public void ’a¶_€‚ñ‚Å‚¢‚éƒZƒ‹‚É—×Ú‚·‚é¶‚«‚½ƒZƒ‹‚ª‚¿‚å‚¤‚Ç3‚Â‚ ‚ê‚ÎŸ‚Ì¢‘ã‚ª’a¶‚·‚é() {
+	public void èª•ç”Ÿ_æ­»ã‚“ã§ã„ã‚‹ã‚»ãƒ«ã«éš£æ¥ã™ã‚‹ç”ŸããŸã‚»ãƒ«ãŒã¡ã‚‡ã†ã©3ã¤ã‚ã‚Œã°æ¬¡ã®ä¸–ä»£ãŒèª•ç”Ÿã™ã‚‹() {
 		assertThat(new Space(aliveCase()).nextTime().cell(1,1)
 				.isAlive(), 
 				 is(true));
 	}
 
 	@Test
-	public void ¶‘¶_¶‚«‚Ä‚¢‚éƒZƒ‹‚É—×Ú‚·‚é¶‚«‚½ƒZƒ‹‚ª2‚Â‚©3‚Â‚È‚ç‚ÎŸ‚Ì¢‘ã‚Å‚à¶‘¶‚·‚é() {
+	public void ç”Ÿå­˜_ç”Ÿãã¦ã„ã‚‹ã‚»ãƒ«ã«éš£æ¥ã™ã‚‹ç”ŸããŸã‚»ãƒ«ãŒ2ã¤ã‹3ã¤ãªã‚‰ã°æ¬¡ã®ä¸–ä»£ã§ã‚‚ç”Ÿå­˜ã™ã‚‹() {
 		assertThat(new Space(survival2Case()).nextTime().cell(1,1)
 				.isAlive(), 
 				 is(true));
@@ -60,14 +60,14 @@ public class SpaceTest {
 	}
 
 	@Test
-	public void ‰ß‘a_¶‚«‚Ä‚¢‚éƒZƒ‹‚É—×Ú‚·‚é¶‚«‚½ƒZƒ‹‚ª1‚ÂˆÈ‰º‚È‚ç‚Î‰ß‘a‚É‚æ‚è€–Å‚·‚é() {
+	public void éç–_ç”Ÿãã¦ã„ã‚‹ã‚»ãƒ«ã«éš£æ¥ã™ã‚‹ç”ŸããŸã‚»ãƒ«ãŒ1ã¤ä»¥ä¸‹ãªã‚‰ã°éç–ã«ã‚ˆã‚Šæ­»æ»…ã™ã‚‹() {
 		assertThat(new Space(underDeadCase()).nextTime().cell(1,1)
 				.isDead(), 
 				 is(true));
 	}
 
 	@Test
-	public void ‰ß–§_¶‚«‚Ä‚¢‚éƒZƒ‹‚É—×Ú‚·‚é¶‚«‚½ƒZƒ‹‚ª4‚ÂˆÈã‚È‚ç‚Î‰ß–§‚É‚æ‚è€–Å‚·‚é() {
+	public void éå¯†_ç”Ÿãã¦ã„ã‚‹ã‚»ãƒ«ã«éš£æ¥ã™ã‚‹ç”ŸããŸã‚»ãƒ«ãŒ4ã¤ä»¥ä¸Šãªã‚‰ã°éå¯†ã«ã‚ˆã‚Šæ­»æ»…ã™ã‚‹() {
 		assertThat(new Space(upperDeadCase()).nextTime().cell(1,1)
 				.isDead(), 
 				 is(true));
@@ -76,13 +76,13 @@ public class SpaceTest {
 	
 	// Cell#countAroundAlive()
 	@Test
-	public void ü‚è‚Ì¶‚«‚Ä‚¢‚éƒZƒ‹‚Ì”‚ğƒJƒEƒ“ƒg‚Å‚«‚é‚±‚Æ() throws Exception {
+	public void å‘¨ã‚Šã®ç”Ÿãã¦ã„ã‚‹ã‚»ãƒ«ã®æ•°ã‚’ã‚«ã‚¦ãƒ³ãƒˆã§ãã‚‹ã“ã¨() throws Exception {
 		assertThat(new Space(aliveCase()).cell(1, 1).countAroundAlive(), is(3));
 	}
 
 	// Cell#aroundCells()
 	@Test
-	public void ’†‰›‚Ìê‡‚Ìü‚è‚ÌƒZƒ‹‚ªæ“¾‚Å‚«‚é‚±‚Æ() throws Exception {
+	public void ä¸­å¤®ã®å ´åˆã®å‘¨ã‚Šã®ã‚»ãƒ«ãŒå–å¾—ã§ãã‚‹ã“ã¨() throws Exception {
 		Space space = new Space(aliveCase());
 		List<Space.Cell> aroundCells = space.cell(1,1).aroundCells();
 		assertThat(aroundCells.size(), is(8));
@@ -101,7 +101,7 @@ public class SpaceTest {
 	}
 
 	@Test
-	public void ¶ã‹÷‚Ìê‡‚Ìü‚è‚ÌƒZƒ‹‚ªæ“¾‚Å‚«‚é‚±‚Æ() throws Exception {
+	public void å·¦ä¸Šéš…ã®å ´åˆã®å‘¨ã‚Šã®ã‚»ãƒ«ãŒå–å¾—ã§ãã‚‹ã“ã¨() throws Exception {
 		Space space = new Space(sampleCalse());
 		List<Space.Cell> aroundCells = space.cell(0, 0).aroundCells();
 		assertThat(aroundCells.size(), is(3));
@@ -115,7 +115,7 @@ public class SpaceTest {
 	}
 
 	@Test
-	public void ‰E‰º‹÷‚Ìê‡‚Ìü‚è‚ÌƒZƒ‹‚ªæ“¾‚Å‚«‚é‚±‚Æ() throws Exception {
+	public void å³ä¸‹éš…ã®å ´åˆã®å‘¨ã‚Šã®ã‚»ãƒ«ãŒå–å¾—ã§ãã‚‹ã“ã¨() throws Exception {
 		Space space = new Space(sampleCalse());
 		List<Space.Cell> aroundCells = space.cell(2, 2).aroundCells();
 		
@@ -130,7 +130,7 @@ public class SpaceTest {
 	}
 
 	@Test
-	public void ‰Eã‹÷‚Ìê‡‚Ìü‚è‚ÌƒZƒ‹‚ªæ“¾‚Å‚«‚é‚±‚Æ() throws Exception {
+	public void å³ä¸Šéš…ã®å ´åˆã®å‘¨ã‚Šã®ã‚»ãƒ«ãŒå–å¾—ã§ãã‚‹ã“ã¨() throws Exception {
 		Space space = new Space(sampleCalse());
 		List<Space.Cell> aroundCells = space.cell(0, 2).aroundCells();
 		
