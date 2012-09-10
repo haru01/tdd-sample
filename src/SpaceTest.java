@@ -83,7 +83,7 @@ public class SpaceTest {
 	}
 
 // 補助問題
-	public static class aroundCell {
+	public static class countAroundAlive {
 		
 		private Space space;
 
@@ -99,64 +99,16 @@ public class SpaceTest {
 		}
 
 		@Test
-		public void 中央の場合の周りのセルが取得できること() throws Exception {
-			List<Space.Cell> aroundCells = space.cell(1,1).aroundCells();
-
-			assertThat(aroundCells.size(), is(8));
-			assertThat(aroundCells, 
-					hasItems(space.cell(0, 0),
-							 space.cell(0, 1),
-							 space.cell(0, 2),
-							 space.cell(1, 0),
-							 space.cell(1, 2),
-							 space.cell(2, 0),
-							 space.cell(2, 1),
-							 space.cell(2, 2)));
-			assertThat(aroundCells, 
-					not(hasItems(
-							 space.cell(1, 1))));
-		}
-
-
-		@Test
-		public void 左上隅の場合の周りのセルが取得できること() throws Exception {
-			List<Space.Cell> aroundCells = space.cell(0, 0).aroundCells();
-			assertThat(aroundCells.size(), is(3));
-			assertThat(aroundCells, 
-					hasItems(space.cell(0, 1),
-							 space.cell(1, 0),
-							 space.cell(1, 1)));
-			assertThat(aroundCells, 
-					not(hasItems(
-							 space.cell(0, 0))));
-		}
-
-		@Test
-		public void 右下隅の場合の周りのセルが取得できること() throws Exception {
-			List<Space.Cell> aroundCells = space.cell(2, 2).aroundCells();
-
-			assertThat(aroundCells.size(), is(3));
-			assertThat(aroundCells, 
-					hasItems(space.cell(1, 1),
-							 space.cell(1, 2),
-							 space.cell(2, 1)));
-			assertThat(aroundCells, 
-					not(hasItems(
-							 space.cell(2, 2))));
-		}
-
-		@Test
-		public void 右上隅の場合の周りのセルが取得できること() throws Exception {
-			List<Space.Cell> aroundCells = space.cell(0, 2).aroundCells();
-
-			assertThat(aroundCells.size(), is(3));
-			assertThat(aroundCells, 
-					hasItems(space.cell(0, 1),
-							 space.cell(1, 1),
-							 space.cell(1, 2)));
-			assertThat(aroundCells, 
-					not(hasItems(
-							 space.cell(0, 2))));
+		public void 周りのセルの生きている数をカウントできること() throws Exception {
+			assertThat(space.cell(0, 0).countAroundAlive(), is(2));
+			assertThat(space.cell(0, 1).countAroundAlive(), is(2));
+			assertThat(space.cell(0, 2).countAroundAlive(), is(1));
+			assertThat(space.cell(1, 0).countAroundAlive(), is(2));
+			assertThat(space.cell(1, 1).countAroundAlive(), is(3));
+			assertThat(space.cell(1, 2).countAroundAlive(), is(1));
+			assertThat(space.cell(2, 0).countAroundAlive(), is(1));
+			assertThat(space.cell(2, 1).countAroundAlive(), is(1));
+			assertThat(space.cell(2, 2).countAroundAlive(), is(0));
 		}
 	}
 }
