@@ -1,146 +1,162 @@
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.hasItems;
 
 import java.util.List;
+
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 
+@RunWith(Enclosed.class)
 public class SpaceTest {
-	private Integer[][] sampleCalse() {
-		return aliveCase();
-	}
-	
-	private Integer[][] aliveCase() {
-		return new Integer[][] {{1,1,0},
-								{1,0,0},
-								{0,0,0}};
-	}
+	public static class 誕生_死んでいるセルに隣接する生きたセルがちょうど3つならば {
+		private Space space;
 
-	private Integer[][] survival2Case() {
-		return new Integer[][] {{1,1,0},
-								{0,1,0},
-								{0,0,0}};
+		@Before
+		public void setUp() {
+			space =  new Space(new Integer[][] {{1,1,0},{1,0,0},{0,0,0}});
+		}
+
+		@Test
+		public void 次の世代で誕生する() {
+			assertThat(space.nextTime().cell(1,1).isAlive(), is(true));
+		}
 	}
 
-	private Integer[][] survival3Case() {
-		return new Integer[][] {{1,1,1},
-								{0,1,0},
-								{0,0,0}};
+	public static class 生存_2_生きているセルに隣接する生きたセルが2つならば_次の世代でも生存する {
+		private Space space;
+
+		@Before
+		public void setUp() {
+			space =  new Space(new Integer[][] {{1,1,0},{0,1,0},{0,0,0}});
+		}
+
+		@Test
+		public void 次の世代で生存する() {
+			assertThat(space.nextTime().cell(1,1).isAlive(), is(true));
+		}
 	}
 
-	private Integer[][] underDeadCase() {
-		return new Integer[][] {{0,1,0},
-								{0,1,0},
-								{0,0,0}};
+	public static class 生存_3_生きているセルに隣接する生きたセルが3つならば_次の世代でも生存する {
+		private Space space;
+
+		@Before
+		public void setUp() {
+			space =  new Space(new Integer[][] {{1,1,1},{0,1,0},{0,0,0}});
+		}
+
+		@Test
+		public void 次の世代で生存する() {
+			assertThat(space.nextTime().cell(1,1).isAlive(), is(true));
+		}
 	}
 
-	private Integer[][] upperDeadCase() {
-		return new Integer[][] {{1,1,1},
-								{1,1,0},
-								{0,0,0}};
+	public static class 死滅_過疎_生きているセルに隣接する生きたセルが1つ以下ならば_過疎により死滅する {
+		private Space space;
+
+		@Before
+		public void setUp() {
+			space =  new Space(new Integer[][] {{0,1,0},{0,1,0},{0,0,0}});
+		}
+
+		@Test
+		public void 次の世代で死滅する() {
+			assertThat(space.nextTime().cell(1,1).isAlive(), is(false));
+		}
 	}
 
-	@Test
-	public void 誕生_死んでいるセルに隣接する生きたセルがちょうど3つあれば次の世代が誕生する() {
-		assertThat(new Space(aliveCase()).nextTime().cell(1,1)
-				.isAlive(), 
-				 is(true));
+	public static class 死滅_過密_生きているセルに隣接する生きたセルが4つ以上ならば_過密により死滅する {
+		private Space space;
+
+		@Before
+		public void setUp() {
+			space =  new Space(new Integer[][] {{1,1,1},{0,1,1},{0,0,0}});
+		}
+
+		@Test
+		public void 次の世代で死滅する() {
+			assertThat(space.nextTime().cell(1,1).isAlive(), is(false));
+		}
 	}
 
-	@Test
-	public void 生存_生きているセルに隣接する生きたセルが2つか3つならば次の世代でも生存する() {
-		assertThat(new Space(survival2Case()).nextTime().cell(1,1)
-				.isAlive(), 
-				 is(true));
-		assertThat(new Space(survival3Case()).nextTime().cell(1,1)
-				.isAlive(), 
-				 is(true));
-
-	}
-
-	@Test
-	public void 過疎_生きているセルに隣接する生きたセルが1つ以下ならば過疎により死滅する() {
-		assertThat(new Space(underDeadCase()).nextTime().cell(1,1)
-				.isDead(), 
-				 is(true));
-	}
-
-	@Test
-	public void 過密_生きているセルに隣接する生きたセルが4つ以上ならば過密により死滅する() {
-		assertThat(new Space(upperDeadCase()).nextTime().cell(1,1)
-				.isDead(), 
-				 is(true));
-	}
-
-	
-	// Cell#countAroundAlive()
-	@Test
-	public void 周りの生きているセルの数をカウントできること() throws Exception {
-		assertThat(new Space(aliveCase()).cell(1, 1).countAroundAlive(), is(3));
-	}
-
-	// Cell#aroundCells()
-	@Test
-	public void 中央の場合の周りのセルが取得できること() throws Exception {
-		Space space = new Space(aliveCase());
-		List<Space.Cell> aroundCells = space.cell(1,1).aroundCells();
-		assertThat(aroundCells.size(), is(8));
-		assertThat(aroundCells, 
-				hasItems(space.cell(0, 0),
-						 space.cell(0, 1),
-						 space.cell(0, 2),
-						 space.cell(1, 0),
-						 space.cell(1, 2),
-						 space.cell(2, 0),
-						 space.cell(2, 1),
-						 space.cell(2, 2)));
-		assertThat(aroundCells, 
-				not(hasItems(
-						 space.cell(1, 1))));
-	}
-
-	@Test
-	public void 左上隅の場合の周りのセルが取得できること() throws Exception {
-		Space space = new Space(sampleCalse());
-		List<Space.Cell> aroundCells = space.cell(0, 0).aroundCells();
-		assertThat(aroundCells.size(), is(3));
-		assertThat(aroundCells, 
-				hasItems(space.cell(0, 1),
-						 space.cell(1, 0),
-						 space.cell(1, 1)));
-		assertThat(aroundCells, 
-				not(hasItems(
-						 space.cell(0, 0))));
-	}
-
-	@Test
-	public void 右下隅の場合の周りのセルが取得できること() throws Exception {
-		Space space = new Space(sampleCalse());
-		List<Space.Cell> aroundCells = space.cell(2, 2).aroundCells();
+// 補助問題
+	public static class aroundCell {
 		
-		assertThat(aroundCells.size(), is(3));
-		assertThat(aroundCells, 
-				hasItems(space.cell(1, 1),
-						 space.cell(1, 2),
-						 space.cell(2, 1)));
-		assertThat(aroundCells, 
-				not(hasItems(
-						 space.cell(2, 2))));
-	}
+		private Space space;
 
-	@Test
-	public void 右上隅の場合の周りのセルが取得できること() throws Exception {
-		Space space = new Space(sampleCalse());
-		List<Space.Cell> aroundCells = space.cell(0, 2).aroundCells();
+		private Integer[][] sampleCalse() {
+			return new Integer[][] {{1,1,0},
+									{1,0,0},
+									{0,0,0}};
+		}
 		
-		assertThat(aroundCells.size(), is(3));
-		assertThat(aroundCells, 
-				hasItems(space.cell(0, 1),
-						 space.cell(1, 1),
-						 space.cell(1, 2)));
-		assertThat(aroundCells, 
-				not(hasItems(
-						 space.cell(0, 2))));
+		@Before
+		public void setUp() {
+			space = new Space(sampleCalse());
+		}
+
+		@Test
+		public void 中央の場合の周りのセルが取得できること() throws Exception {
+			List<Space.Cell> aroundCells = space.cell(1,1).aroundCells();
+
+			assertThat(aroundCells.size(), is(8));
+			assertThat(aroundCells, 
+					hasItems(space.cell(0, 0),
+							 space.cell(0, 1),
+							 space.cell(0, 2),
+							 space.cell(1, 0),
+							 space.cell(1, 2),
+							 space.cell(2, 0),
+							 space.cell(2, 1),
+							 space.cell(2, 2)));
+			assertThat(aroundCells, 
+					not(hasItems(
+							 space.cell(1, 1))));
+		}
+
+
+		@Test
+		public void 左上隅の場合の周りのセルが取得できること() throws Exception {
+			List<Space.Cell> aroundCells = space.cell(0, 0).aroundCells();
+			assertThat(aroundCells.size(), is(3));
+			assertThat(aroundCells, 
+					hasItems(space.cell(0, 1),
+							 space.cell(1, 0),
+							 space.cell(1, 1)));
+			assertThat(aroundCells, 
+					not(hasItems(
+							 space.cell(0, 0))));
+		}
+
+		@Test
+		public void 右下隅の場合の周りのセルが取得できること() throws Exception {
+			List<Space.Cell> aroundCells = space.cell(2, 2).aroundCells();
+
+			assertThat(aroundCells.size(), is(3));
+			assertThat(aroundCells, 
+					hasItems(space.cell(1, 1),
+							 space.cell(1, 2),
+							 space.cell(2, 1)));
+			assertThat(aroundCells, 
+					not(hasItems(
+							 space.cell(2, 2))));
+		}
+
+		@Test
+		public void 右上隅の場合の周りのセルが取得できること() throws Exception {
+			List<Space.Cell> aroundCells = space.cell(0, 2).aroundCells();
+
+			assertThat(aroundCells.size(), is(3));
+			assertThat(aroundCells, 
+					hasItems(space.cell(0, 1),
+							 space.cell(1, 1),
+							 space.cell(1, 2)));
+			assertThat(aroundCells, 
+					not(hasItems(
+							 space.cell(0, 2))));
+		}
 	}
 }
